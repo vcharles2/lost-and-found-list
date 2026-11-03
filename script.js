@@ -1,8 +1,8 @@
 // Get the form and list elements
-const itemForm = document.getElementById('item-form');
-const itemList = document.getElementById('item-list');
-const itemInput = document.getElementById('item-input');
-const emptyMessage = document.getElementById('empty-message');
+const itemForm = document.getElementById('lostItemForm');
+const itemList = document.getElementById('lostItemsList');
+const itemInput = document.getElementById('itemInput');
+const emptyMessage = document.getElementById('emptyMessage');
 
 // Load items from localStorage when the page loads or start empty
 let items = JSON.parse(localStorage.getItem('lostAndFoundItems')) || [];
@@ -20,13 +20,11 @@ itemForm.addEventListener('submit', () => {
     // Create a new item object
     const newItem = {
         id: Date.now(), // Unique ID based on timestamp
-        name:itemName
+        name: itemName
     };
 
     items.push(newItem); // Add the new item to the items array
     localStorage.setItem('lostAndFoundItems', JSON.stringify(items));
-    itemInput.value = ''; // Clear the input field
-    renderItems(); // Re-render the list
 });
 // delete item function
 function deleteItem(id) {
