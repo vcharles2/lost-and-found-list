@@ -1,1 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lost and found for Students</title>
+        <!-- Linking CSS -->
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <h1>Lost and Found</h1>
+        <!-- Form for submitting lost items -->
+        <form id="lostItemForm">
+            <input type="text" id="itemInput" placeholder="Enter lost item (i.e., wallet, phone)" required autocomplete="off">
+            <button type="submit" class="add-btn">Submit</button>
+        </form>
+        <!-- List to display lost items -->
+        <ul id="lostItemsList"></ul>
+        <div id="emptyMessage" class="empty-state">No lost items reported yet.</div>
 
+        <!-- Linking JavaScript -->
+        <script src="script.js"></script>
+    </body>
+</html>
