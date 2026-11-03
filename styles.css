@@ -1,0 +1,42 @@
+body{
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+form{
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+button{
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+li{
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.empty-state{
+    text-align: center;
+    color: #888;
+    font-size: 18px;
+    font-style: italic;
+}
