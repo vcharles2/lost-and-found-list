@@ -24,6 +24,16 @@
             <button type="submit" class="add-btn">Submit</button>
         </form>
 
+        <!-- Search and Filter Controls (US-04) -->
+        <div class="filter-controls">
+            <input type="text" id="searchInput" placeholder="Search by item name or description..." autocomplete="off">
+            <select id="categoryFilter" aria-label="Filter by Status">
+                <option value="All">All Items</option>
+                <option value="Lost">Lost Only</option>
+                <option value="Found">Found Only</option>
+            </select>
+        </div>
+
         <!-- List to display items -->
         <ul id="lostItemsList"></ul>
         <div id="emptyMessage" class="empty-state">No lost items reported yet.</div>

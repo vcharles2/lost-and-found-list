@@ -32,6 +32,20 @@ button {
     display: none;
 }
 
+.filter-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filter-controls input[type="text"] {
+    flex: 2;
+}
+
+.filter-controls select {
+    flex: 1;
+}
+
 ul {
     list-style-type: none;
     padding: 0;
