@@ -8,6 +8,9 @@ const categoryInput = document.getElementById('categoryInput');
 const itemInput = document.getElementById('itemInput');
 const descriptionInput = document.getElementById('descriptionInput');
 const errorMessage = document.getElementById('errorMessage');
+
+const searchInput = document.getElementById('searchInput');
+const categoryFilter = document.getElementById('categoryFilter');
 const itemList = document.getElementById('lostItemsList');
 const emptyMessage = document.getElementById('emptyMessage');
 
@@ -33,6 +36,10 @@ itemForm.addEventListener('submit', (e) => {
     }
 });
 
+// Live search and category filter listeners
+searchInput.addEventListener('input', renderItems);
+categoryFilter.addEventListener('change', renderItems);
+
 // Delete item function
 function deleteItem(id) {
     itemService.deleteItem(id);
@@ -43,16 +50,20 @@ function deleteItem(id) {
 function renderItems() {
     itemList.innerHTML = '';
 
-    const items = itemService.getItems();
+    const allItems = itemService.getItems();
+    const filteredItems = itemService.filterItems(searchInput.value, categoryFilter.value);
 
-    if (items.length === 0) {
+    if (filteredItems.length === 0) {
+        emptyMessage.textContent = allItems.length === 0
+            ? 'No lost items reported yet.'
+            : 'No matching items found.';
         emptyMessage.style.display = 'block';
         return;
     }
 
     emptyMessage.style.display = 'none';
 
-    items.forEach(item => {
+    filteredItems.forEach(item => {
         const li = document.createElement('li');
 
         const detailsDiv = document.createElement('div');
