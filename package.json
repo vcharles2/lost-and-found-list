@@ -1,0 +1,9 @@
+{
+    "name": "lost-and-found",
+    "version": "2.0.0",
+    "description": "Lost and Found for Students",
+    "scripts": {
+        "test": "node --test"
+    }
+}
+
