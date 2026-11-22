@@ -1,68 +1,91 @@
+// Inject LocalStorageRepository into ItemService (Dependency Inversion)
+const storage = new LocalStorageRepository('lostAndFoundItems');
+const itemService = new ItemService(storage);
+
 // Get the form and list elements
 const itemForm = document.getElementById('lostItemForm');
-const itemList = document.getElementById('lostItemsList');
+const categoryInput = document.getElementById('categoryInput');
 const itemInput = document.getElementById('itemInput');
+const descriptionInput = document.getElementById('descriptionInput');
+const errorMessage = document.getElementById('errorMessage');
+const itemList = document.getElementById('lostItemsList');
 const emptyMessage = document.getElementById('emptyMessage');
 
-// Load items from localStorage when the page loads or start empty
-let items = JSON.parse(localStorage.getItem('lostAndFoundItems')) || [];
-
-
-//render the items in the list
+// Render the items in the list on initial load
 renderItems();
 
-//form submission event listener
-itemForm.addEventListener('submit', () => {
+// Form submission event listener
+itemForm.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-    const itemName = itemInput.value.trim();
-    if (!itemName) return; // Do not add empty items
-
-    // Create a new item object
-    const newItem = {
-        id: Date.now(), // Unique ID based on timestamp
-        name: itemName
-    };
-
-    items.push(newItem); // Add the new item to the items array
-    localStorage.setItem('lostAndFoundItems', JSON.stringify(items));
+    try {
+        itemService.addItem(
+            itemInput.value,
+            categoryInput.value,
+            descriptionInput.value
+        );
+        errorMessage.style.display = 'none';
+        itemForm.reset();
+        renderItems();
+    } catch (error) {
+        errorMessage.textContent = error.message;
+        errorMessage.style.display = 'block';
+    }
 });
-// delete item function
+
+// Delete item function
 function deleteItem(id) {
-    items = items.filter(item => item.id !== id);
-    saveAndRender(); // Remove the item with the given ID
-}
-
-
-//save data and update the UI (used during deletion)
-function saveAndRender() {
-    localStorage.setItem('lostAndFoundItems', JSON.stringify(items));
+    itemService.deleteItem(id);
     renderItems();
 }
 
-// render items function
+// Render items function
 function renderItems() {
-    itemList.innerHTML = ''; // Clear the current list
-    
+    itemList.innerHTML = '';
+
+    const items = itemService.getItems();
+
     if (items.length === 0) {
-        emptyMessage.style.display = 'block'; // Show the empty message
+        emptyMessage.style.display = 'block';
         return;
     }
 
-    emptyMessage.style.display = 'none'; // Hide the empty message
+    emptyMessage.style.display = 'none';
 
     items.forEach(item => {
         const li = document.createElement('li');
-        // item text
-        const textSpan = document.createElement('span');
-        textSpan.textContent = item.name;
 
-        // delete button
+        const detailsDiv = document.createElement('div');
+        detailsDiv.className = 'item-details';
+
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'item-header';
+
+        const category = item.category || 'Lost';
+        const badge = document.createElement('span');
+        badge.className = `badge ${category === 'Found' ? 'badge-found' : 'badge-lost'}`;
+        badge.textContent = category;
+
+        const nameStrong = document.createElement('strong');
+        nameStrong.textContent = item.name;
+
+        headerDiv.appendChild(badge);
+        headerDiv.appendChild(nameStrong);
+        detailsDiv.appendChild(headerDiv);
+
+        if (item.description) {
+            const descSpan = document.createElement('span');
+            descSpan.className = 'item-description';
+            descSpan.textContent = item.description;
+            detailsDiv.appendChild(descSpan);
+        }
+
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.className = 'delete-button';
-        deleteButton.onclick = () => deleteItem(item.id); // Set the delete function
+        deleteButton.onclick = () => deleteItem(item.id);
 
-        li.appendChild(textSpan);
+        li.appendChild(detailsDiv);
         li.appendChild(deleteButton);
         itemList.appendChild(li);
     });

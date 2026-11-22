@@ -1,42 +1,89 @@
-body{
+body {
     font-family: Arial, sans-serif;
     max-width: 600px;
     margin: 40px auto;
     padding: 20px;
 }
 
-form{
+form {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-input[type="text"] {
+input[type="text"], select, textarea {
     width: 100%;
     padding: 10px;
     font-size: 16px;
+    box-sizing: border-box;
+    font-family: inherit;
 }
 
-button{
+button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
 }
 
-ul{
+.error-message {
+    color: #d93025;
+    font-size: 14px;
+    display: none;
+}
+
+ul {
     list-style-type: none;
     padding: 0;
 }
 
-li{
-    padding: 10px;
+li {
+    padding: 12px 10px;
     border-bottom: 1px solid #ccc;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
-.empty-state{
+.item-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.item-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.badge {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.badge-lost {
+    background-color: #ffeeba;
+    color: #856404;
+}
+
+.badge-found {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.item-description {
+    font-size: 14px;
+    color: #555;
+}
+
+.empty-state {
     text-align: center;
     color: #888;
     font-size: 18px;
     font-style: italic;
+    margin-top: 20px;
 }
